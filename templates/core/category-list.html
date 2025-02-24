@@ -126,7 +126,7 @@
                 class="col-xl-4 col-lg-6 col-md-6 text-center hover-up mb-30 animated"
               >
                 <div class="post-thumb">
-                  <a href="blog-post-right.html">
+                  <a href="{% url 'core:category-product-list' c.cid %}">
                     <img
                       class="border-radius-15"
                       src="{{c.image.url}}"
@@ -136,7 +136,7 @@
                   <div class="entry-meta">
                     <a
                       class="entry-meta meta-2"
-                      href="blog-category-grid.html"
+                      href="{% url 'core:category-product-list' c.cid %}"
                       ><i class="fi-rs-heart"></i
                     ></a>
                   </div>
