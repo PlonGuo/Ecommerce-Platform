@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from core.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, wishlist, Address
+from django.db.models import Count
 
 def index(request):
     # products = Product.objects.all().order_by('-id')
