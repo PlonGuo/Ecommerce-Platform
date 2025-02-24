@@ -1,6 +1,6 @@
 from django.urls import path
 # from core.views import index
-from core.views import index, category_list_view, product_list_view, category_product_list_view, vendor_list_view
+from core.views import index, category_list_view, product_list_view, category_product_list_view, vendor_list_view, vendor_detail_view
 
 app_name = "core"
 
@@ -15,4 +15,5 @@ urlpatterns = [
 
     # Vendor
     path("vendors/", vendor_list_view, name="vendor-list"),
+    path("vendor/<vid>/", vendor_detail_view, name="vendor-detail")
 ]
