@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from core.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, wishlist, Address
-from django.db.models import Count
+from django.db.models import Count, Avg
 from taggit.models import Tag
 
 def index(request):
@@ -66,13 +66,41 @@ def product_detail_view(request, pid):
     product = Product.objects.get(pid=pid)
     # product = get_object_or_404(Product, pid=pid)
     products = Product.objects.filter(category=product.category).exclude(pid=pid)
+
+    # Getting all reviews
+    reviews = ProductReview.objects.filter(product=product).order_by("-date")
+
+    # Getting average Review
+    average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
+
+    # 获取每个星级的数量
+    star_counts = (
+        ProductReview.objects.filter(product=product)
+        .values('rating')
+        .annotate(count=Count('rating'))
+        .order_by('-rating')
+    )
+
+    # 计算总评分数量
+    total_reviews = ProductReview.objects.filter(product=product).count()
+
+    # 计算每个星级的百分比
+    star_percentage = {}
+    for star in range(1, 6):  # 从 1 星到 5 星
+        count = next((item['count'] for item in star_counts if item['rating'] == star), 0)
+        percentage = round((count / total_reviews) * 100) if total_reviews > 0 else 0
+        star_percentage[star] = percentage
     
     p_image = product.p_images.all()
 
     context = {
         "p": product,
         "p_image": p_image,
+        "average_rating": average_rating,
         "products": products,
+        "reviews": reviews,
+        "star_percentage": star_percentage,
+        
     }
 
     return render(request, "core/product-detail.html", context)
