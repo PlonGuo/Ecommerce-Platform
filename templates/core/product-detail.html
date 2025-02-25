@@ -162,21 +162,15 @@
                         <li class="mb-5">SKU: <a href="#">{{p.sku}}</a></li>
                         <li class="mb-5">
                           Tags:
+                          {% for tag in p.tags.all %}
                           <a
-                            href="#"
+                            href="{% url 'core:tags' tag.slug %}"
                             rel="tag"
-                            >Snack</a
+                            >
+                            #{{tag.name}}
+                            </a
                           >,
-                          <a
-                            href="#"
-                            rel="tag"
-                            >Organic</a
-                          >,
-                          <a
-                            href="#"
-                            rel="tag"
-                            >Brown</a
-                          >
+                          {% endfor %}
                         </li>
                         <li>
                           Stock:<span class="in-stock text-brand ml-5"
@@ -718,7 +712,7 @@
               <div class="row mt-60">
                 {% if products %}
                 <div class="col-12">
-                  <h2 class="section-title style-1 mb-30">Related product</h2>
+                  <h2 class="section-title style-1 mb-30">Related products</h2>
                 </div>
                 {% endif %}
                 <div class="col-12">
