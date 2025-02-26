@@ -426,11 +426,10 @@
                                           >{{r.date|date:"d M, Y"}}
                                         </span>
                                       </div>
-                                      <div class="product-rate d-inline-block">
-                                        <div
-                                          class="product-rating"
-                                          style="width: 100%"
-                                        ></div>
+                                      <div>
+                                        {% for s in r.rating|ljust:r.rating %}
+                                          <i class="fa fa-star text-warning"></i>
+                                        {% endfor %}
                                       </div>
                                     </div>
                                     <p class="mb-10">
@@ -529,75 +528,100 @@
                         </div>
                       </div>
                       <!--comment form-->
-                      <div class="comment-form">
-                        <h4 class="mb-15">Add a review</h4>
-                        <div class="product-rate d-inline-block mb-30"></div>
-                        <div class="row">
-                          <div class="col-lg-8 col-md-12">
-                            <form
-                              class="form-contact comment_form"
-                              action="#"
-                              id="commentForm"
-                            >
-                              <div class="row">
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <!-- <textarea
-                                      class="form-control w-100"
-                                      name="comment"
-                                      id="comment"
-                                      cols="30"
-                                      rows="9"
-                                      placeholder="Write Comment"
-                                    ></textarea> -->
-                                  </div>
-                                </div>
-                                <!-- <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <input
-                                      class="form-control"
-                                      name="name"
-                                      id="name"
-                                      type="text"
-                                      placeholder="Name"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <input
-                                      class="form-control"
-                                      name="email"
-                                      id="email"
-                                      type="email"
-                                      placeholder="Email"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col-12">
-                                  <div class="form-group">
-                                    <input
-                                      class="form-control"
-                                      name="website"
-                                      id="website"
-                                      type="text"
-                                      placeholder="Website"
-                                    />
-                                  </div>
-                                </div> -->
-                              </div>
-                              <div class="form-group">
-                                <button
-                                  type="submit"
-                                  class="button button-contactForm"
+                      {% if make_review == True %}
+                        {% if request.user.is_authenticated %}
+                          <div class="comment-form">
+                            <h4 class="mb-15 add-review">Add a review</h4>
+                            <strong class="text-success" id="review-res">Review Added</strong>
+                            <!-- <div class="product-rate d-inline-block mb-30"></div> -->
+                            <div class="row">
+                              <div class="col-lg-8 col-md-12">
+                                <form
+                                  class="form-contact comment_form high-comment-form"
+                                  action="{% url 'core:ajax-add-review' p.pid %}"
+                                  id="commentForm"
+                                  method="POST"
                                 >
-                                  Submit Review
-                                </button>
+                                {% csrf_token%}
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="form-group">
+
+                                        {{review_form.review}}
+                                        <!-- <textarea
+                                          class="form-control w-100"
+                                          name="comment"
+                                          id="comment"
+                                          cols="30"
+                                          rows="9"
+                                          placeholder="Write Comment"
+                                        ></textarea> -->
+                                      </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                      <div class="form-group">
+
+                                        {{review_form.rating}}
+                                        <!-- <textarea
+                                          class="form-control w-100"
+                                          name="comment"
+                                          id="comment"
+                                          cols="30"
+                                          rows="9"
+                                          placeholder="Write Comment"
+                                        ></textarea> -->
+                                      </div>
+                                    </div>
+
+                                    <!-- <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <input
+                                          class="form-control"
+                                          name="name"
+                                          id="name"
+                                          type="text"
+                                          placeholder="Name"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <input
+                                          class="form-control"
+                                          name="email"
+                                          id="email"
+                                          type="email"
+                                          placeholder="Email"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-12">
+                                      <div class="form-group">
+                                        <input
+                                          class="form-control"
+                                          name="website"
+                                          id="website"
+                                          type="text"
+                                          placeholder="Website"
+                                        />
+                                      </div>
+                                    </div> -->
+                                  </div>
+                                  <div class="form-group">
+                                    <button
+                                      type="submit"
+                                      class="button button-contactForm"
+                                    >
+                                      Submit Review
+                                    </button>
+                                  </div>
+                                </form>
                               </div>
-                            </form>
+                            </div>
                           </div>
-                        </div>
-                      </div>
+                        {% endif %}
+                      {% endif %}
                     </div>
                   </div>
                 </div>
