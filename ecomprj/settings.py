@@ -35,6 +35,9 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://development-server.up.railway.app']
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
+# allow external request
+ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
