@@ -35,9 +35,11 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://development-server.up.railway.app']
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
-# allow external request
-ALLOWED_HOSTS = ['*']
 
+STATIC_URL = '/static/'
+
+# 生产环境的静态文件路径
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Application definition
 
